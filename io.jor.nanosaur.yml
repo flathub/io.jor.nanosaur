@@ -1,13 +1,12 @@
 app-id: io.jor.nanosaur
 runtime: org.freedesktop.Platform
-runtime-version: "21.08"
+runtime-version: "22.08"
 sdk: org.freedesktop.Sdk
 command: Nanosaur
-rename-desktop-file: nanosaur.desktop
-rename-icon: nanosaur-desktopicon
 
 finish-args:
-  - --socket=x11
+  - --socket=wayland
+  - --socket=fallback-x11
   - --socket=pulseaudio
   - --device=dri
   - --share=ipc
@@ -18,23 +17,21 @@ modules:
     sources:
       - type: git
         url: https://github.com/jorio/Nanosaur.git
-        tag: v1.4.3
-        commit: 25520d32d867e93d9523ab3b519ce21b9845fd07
+        tag: v1.4.4
+        commit: 3a56f8a0e5ea6d442ab86c33c1d033c76222b7ac
         x-checker-data:
           type: git
           tag-pattern: ^v([\d.]+)$
       - type: file
         path: nanosaur_launcher.sh
-      - type: file
-        path: io.jor.nanosaur.metainfo.xml
     config-opts:
-      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_BUILD_TYPE=Release
     no-make-install: true
     build-commands:
       - install -D nanosaur_launcher.sh ${FLATPAK_DEST}/bin/Nanosaur
       - mkdir -p ${FLATPAK_DEST}/nanosaur
-      - install -D ${FLATPAK_BUILDER_BUILDDIR}/Nanosaur ${FLATPAK_DEST}/nanosaur/Nanosaur
       - cp -r ./Data ${FLATPAK_DEST}/nanosaur
-      - install -D ./packaging/nanosaur.desktop ${FLATPAK_DEST}/share/applications/nanosaur.desktop
-      - install -D ./packaging/nanosaur-desktopicon.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/nanosaur-desktopicon.png
-      - install -D ./io.jor.nanosaur.metainfo.xml ${FLATPAK_DEST}/share/metainfo/io.jor.nanosaur.metainfo.xml
+      - install -D ${FLATPAK_BUILDER_BUILDDIR}/Nanosaur     ${FLATPAK_DEST}/nanosaur/Nanosaur
+      - install -D ./packaging/io.jor.nanosaur.desktop      ${FLATPAK_DEST}/share/applications/io.jor.nanosaur.desktop
+      - install -D ./packaging/io.jor.nanosaur.png          ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/io.jor.nanosaur.png
+      - install -D ./packaging/io.jor.nanosaur.appdata.xml  ${FLATPAK_DEST}/share/metainfo/io.jor.nanosaur.appdata.xml
