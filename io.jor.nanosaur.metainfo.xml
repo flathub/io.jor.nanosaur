@@ -75,6 +75,7 @@
   </provides>
   
   <releases>
+    <release version="1.4.4" date="2023-02-05"/>
     <release version="1.4.3" date="2022-02-28">
       <url>https://github.com/jorio/Nanosaur/releases/tag/v1.4.3</url>
       <description>

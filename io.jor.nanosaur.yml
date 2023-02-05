@@ -1,6 +1,6 @@
 app-id: io.jor.nanosaur
 runtime: org.freedesktop.Platform
-runtime-version: "21.08"
+runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 command: Nanosaur
 rename-desktop-file: nanosaur.desktop
@@ -18,8 +18,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/jorio/Nanosaur.git
-        tag: v1.4.3
-        commit: 25520d32d867e93d9523ab3b519ce21b9845fd07
+        tag: v1.4.4
+        commit: 3a56f8a0e5ea6d442ab86c33c1d033c76222b7ac
         x-checker-data:
           type: git
           tag-pattern: ^v([\d.]+)$
