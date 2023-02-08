@@ -8,12 +8,23 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --socket=pulseaudio
-  - --device=dri
+  - --device=all  # I wish I could set "dri" only, but gamepads won't work without "all"
   - --share=ipc
 
 modules:
   - name: nanosaur
-    buildsystem: cmake
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+    no-make-install: true
+    post-install:
+      - install -Dm755 nanosaur_launcher.sh ${FLATPAK_DEST}/bin/Nanosaur
+      - mkdir -p ${FLATPAK_DEST}/nanosaur
+      - cp -r ./Data ${FLATPAK_DEST}/nanosaur
+      - install -D ${FLATPAK_BUILDER_BUILDDIR}/Nanosaur     ${FLATPAK_DEST}/nanosaur/Nanosaur
+      - install -D ./packaging/io.jor.nanosaur.desktop      ${FLATPAK_DEST}/share/applications/io.jor.nanosaur.desktop
+      - install -D ./packaging/io.jor.nanosaur.png          ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/io.jor.nanosaur.png
+      - install -D ./packaging/io.jor.nanosaur.appdata.xml  ${FLATPAK_DEST}/share/metainfo/io.jor.nanosaur.appdata.xml
     sources:
       - type: git
         url: https://github.com/jorio/Nanosaur.git
@@ -24,14 +35,3 @@ modules:
           tag-pattern: ^v([\d.]+)$
       - type: file
         path: nanosaur_launcher.sh
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-    no-make-install: true
-    build-commands:
-      - install -D nanosaur_launcher.sh ${FLATPAK_DEST}/bin/Nanosaur
-      - mkdir -p ${FLATPAK_DEST}/nanosaur
-      - cp -r ./Data ${FLATPAK_DEST}/nanosaur
-      - install -D ${FLATPAK_BUILDER_BUILDDIR}/Nanosaur     ${FLATPAK_DEST}/nanosaur/Nanosaur
-      - install -D ./packaging/io.jor.nanosaur.desktop      ${FLATPAK_DEST}/share/applications/io.jor.nanosaur.desktop
-      - install -D ./packaging/io.jor.nanosaur.png          ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/io.jor.nanosaur.png
-      - install -D ./packaging/io.jor.nanosaur.appdata.xml  ${FLATPAK_DEST}/share/metainfo/io.jor.nanosaur.appdata.xml
