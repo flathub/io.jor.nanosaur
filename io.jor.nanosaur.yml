@@ -1,6 +1,6 @@
 app-id: io.jor.nanosaur
 runtime: org.freedesktop.Platform
-runtime-version: "22.08"
+runtime-version: "24.08"
 sdk: org.freedesktop.Sdk
 command: Nanosaur
 
@@ -28,8 +28,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/jorio/Nanosaur.git
-        tag: v1.4.4
-        commit: 3a56f8a0e5ea6d442ab86c33c1d033c76222b7ac
+        #tag: v1.4.4  # TODO: Restore tag for v1.4.5
+        commit: 4f2612f81697a0852f63fa2ea1ac80892f8a5a9c
         x-checker-data:
           type: git
           tag-pattern: ^v([\d.]+)$
